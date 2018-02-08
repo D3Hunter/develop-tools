@@ -1,0 +1,6 @@
+*.pyc
+*.idea
+*.iml
+db.sqlite3
+distribute.sh
+
