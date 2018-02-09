@@ -3,4 +3,6 @@
 *.iml
 db.sqlite3
 distribute.sh
+*.tar.gz
+*.log
 
