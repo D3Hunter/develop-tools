@@ -2,19 +2,27 @@
 <html>
 <body>
 <script src="{% static 'tools_site/Chart.js' %}"></script>
-
+<div style="text-align:center;">
+    <button id="control_button" type="button" onclick="stopInterval(this)">Stop Refresh</button>
+</div>
 <canvas id="myChart" width="100%" height="100%"></canvas>
 <script>
 var colors = [
                 'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 129, 162, 0.2)',
+                'rgba(255, 159, 192, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
+                'rgba(105, 222, 222, 0.2)',
+                'rgba(135, 252, 252, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 100, 30, 0.2)',
+                'rgba(255, 50, 1, 0.2)',
             ];
 var myChart = null;
-function init_display() {
+function initDisplay() {
     var ctx = document.getElementById("myChart").getContext('2d');
     myChart = new Chart(ctx, {
         type: 'line',
@@ -77,8 +85,24 @@ function draw_chart() {
     xhr.open('GET', "{% url 'cpudata' %}", true);
     xhr.send();
 }
-init_display();
-window.setInterval(draw_chart, 5000);
+
+intervalId = null;
+function startInterval(button) {
+    intervalId = window.setInterval(draw_chart, 5000);
+    if (button != null) {
+        button.innerText = "Stop Refresh";
+        button.onclick = function() {stopInterval(button)}
+    }
+}
+function stopInterval(button) {
+    window.clearInterval(intervalId);
+    button.innerText = "Start Refresh";
+    button.onclick = function() {startInterval(button)}
+}
+
+initDisplay();
+startInterval(null);
+
 
 </script>
 </body>

@@ -28,6 +28,7 @@ def cpu_data(request):
         return result
 
     log_files = get_cpu_log_files()
+    log_files.sort()
     result = {}
     for filename in log_files:
         key = filename[:filename.index(SUFFIX)]
